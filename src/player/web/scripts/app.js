@@ -1881,7 +1881,7 @@ function connect() {
       '/ws' + window.location.search; // websocket route
 
   //temporary for now just to get a connection, may employ sidecar later
-  wsUrl = "http://pixel-proto-gluesocket:8080"
+  // wsUrl = "https://pixel-proto-gluesocket-jallenshift-dev.apps.rm2.thpm.p1.openshiftapps.com"
   ws = new WebSocket(wsUrl);
 
   console.log(wsUrl);

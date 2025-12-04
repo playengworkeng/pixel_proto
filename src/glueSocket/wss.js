@@ -11,7 +11,7 @@ const options={
 
 let server = https.createServer( options, (req, res)=>{
 
-// res.writeHead(200)
+ res.writeHead(200)
 res.send('hello');
 
 })
@@ -19,12 +19,7 @@ res.send('hello');
 
 
 
-const wss = new WebSocket.Server({server});//new WebSocket.Server({port :8888})
-
-
-wss.on('error',error=>{
-    console.error(error)
-})
+const wss = new WebSocket.Server({server, path:'/'});//new WebSocket.Server({port :8888})
 
 wss.on('connection',(ws)=>{
         console.log("websocket established");
@@ -32,7 +27,7 @@ wss.on('connection',(ws)=>{
         ws.on('message',data=>{console.log(data.toString('utf8'));
         console.log(`server received a message ${data}`)
 });
-        //ws.send('hello')
+        ws.send('hello')
     });
 
 
