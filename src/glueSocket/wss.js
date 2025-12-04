@@ -10,11 +10,13 @@ const options={
     cert: fs.readFileSync('./certs/cert.pem')
 }
 
-let server = https.createServer( options, (req, res)=>{
+let server = https.createServer(); 
+// options, (req, res)=>{
 
-res.writeHead(200);
+// res.writeHead(200)
+// res.send('hello');
 
-})
+// })
 
 
 
@@ -48,12 +50,12 @@ wss.on('connection',(ws)=>{
 
 
 //add the upgrade logic when coming from http
-server.on('upgrade', (request, socket, head)=>{
-    wss.handleUpgrade(request, socket, head, (ws)=>
-    {    ws.send('hello')
-        wss.emit('connection', ws, request);
-    })
+// server.on('upgrade', (request, socket, head)=>{
+//     wss.handleUpgrade(request, socket, head, (ws)=>
+//     {    ws.send('hello')
+//         wss.emit('connection', ws, request);
+//     })
 
-});
+// });
 
 server.listen( portLocal, ()=> console.log('running https on port 8080'));
