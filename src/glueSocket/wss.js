@@ -1,11 +1,11 @@
 const WebSocket = require('ws');
 
-const wss = new WebSocket.Server({port:8088});//new WebSocket.Server({port :8888})
+const wss = new WebSocket.Server({port:8080});//new WebSocket.Server({port :8888})
 //const ws = new WebSocket("http://localhost:8080")
 // wss.on('connection', ws=>{
 //     console.log('client connected')
 // });
-console.log("I started up");
+console.log("I started up 8080");
 wss.onopen=()=>{
     console.log("received data sniffer");
     const sw = new WebSocket("ws://localhost:3000");
