@@ -1882,7 +1882,7 @@ function connect() {
 
   //temporary for now just to get a connection, may employ sidecar later
   wsUrl = "http://pixel-proto-gluesocket:8080"
-  ws = new WebSocket(wsUrl);
+  ws = new WebSocket(wsUrl,['ws','https','wss']);
 
   console.log(wsUrl);
   ws.onmessage = function (event) {
