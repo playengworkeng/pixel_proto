@@ -1517,6 +1517,14 @@ function registerLockedMouseEvents(playerElement) {
   document.addEventListener('pointerlockchange', lockStateChange, false);
   document.addEventListener('mozpointerlockchange', lockStateChange, false);
 
+  //Respond when a page is loaded send the info to a matchmaker service
+  // document.addEventListener("DOMContentLoaded",)
+
+  // function routePlayerInfoToSocket()
+  // {
+
+  // }
+
   function lockStateChange() {
     if (document.pointerLockElement === playerElement ||
       document.mozPointerLockElement === playerElement) {
@@ -1871,8 +1879,12 @@ function connect() {
       window.location.hostname + // host
       window.location.pathname.split('/').slice(0, -1).join('/') + // path components
       '/ws' + window.location.search; // websocket route
+
+  //temporary for now just to get a connection, may employ sidecar later
+  wsURL = "http://pixel-proto-gluesocket:8080"
   ws = new WebSocket(wsUrl);
 
+  console.log(wsUrl);
   ws.onmessage = function (event) {
     console.log(`<- SS: ${event.data}`);
     let msg = JSON.parse(event.data);
