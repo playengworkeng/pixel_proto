@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # Command to run the application when the container starts
-CMD ["npm", "start"]
+CMD ["node", "wss.js"]

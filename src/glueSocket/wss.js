@@ -5,7 +5,7 @@ const ws = new WebSocket("http://localhost:8080")
 // wss.on('connection', ws=>{
 //     console.log('client connected')
 // });
-
+console.log("I started up");
 ws.onopen=()=>{
     console.log("received data sniffer");
     const sw = new WebSocket("ws://localhost:3000");
