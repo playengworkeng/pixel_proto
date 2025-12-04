@@ -1,6 +1,9 @@
 const WebSocket = require('ws');
 const https = require('https');
+const http = require('http')
 const fs = require('fs');
+const express = require('express');
+const app = express();
 
 const portLocal = 8080;
 
@@ -9,14 +12,19 @@ const options={
     cert: fs.readFileSync('./certs/cert.pem')
 }
 
-let server = https.createServer( options, (req, res)=>{
+const server = http.createServer(app);
 
- res.writeHead(200)
-res.send('hello');
+// let server = https.createServer( options, (req, res)=>{
 
+//  res.writeHead(200)
+// res.send('hello');
+
+// })
+
+app.get('/', (req,res)=>{
+    res.send('Hello');
+    
 })
-
-
 
 
 const wss = new WebSocket.Server({server, path:'/'});//new WebSocket.Server({port :8888})
