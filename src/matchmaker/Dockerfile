@@ -28,6 +28,7 @@ RUN npm prune --production
 FROM --platform=${TARGETPLATFORM:-linux/amd64} node:14-alpine
 COPY --from=builder /src /app
 WORKDIR /app
+RUN chmod 777 /app
 
 # entrypoint
 ENTRYPOINT [ "node", "wrapper.js" ]
