@@ -9,7 +9,7 @@
 	"EnableWebserver": false,
 	"MatchmakerAddress": "",
 	"MatchmakerPort": "9999",
-	"HttpPort": 80,
+	"HttpPort": 8080,
 	"HttpsPort": 443,
 	"StreamerPort": 8888,
 	"metricsPort": 9000,
