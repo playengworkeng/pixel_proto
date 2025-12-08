@@ -277,7 +277,8 @@ class CirrusWrapper {
   handleSocketConnection(socket, request) {
     const { clientConfig } = this.app;
     this._info('supply rtc configuation to socket');
-    this.rtc.getConfiguration(clientConfig.peerConnectionOptions)
+    // this.rtc.getConfiguration(clientConfig.peerConnectionOptions)
+    this.rtc.getConfiguration_dummy(clientConfig.peerConnectionOptions)
       .then(peerConnectionOptions =>
         socket.send(JSON.stringify({
           ...clientConfig,

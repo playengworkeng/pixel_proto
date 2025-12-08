@@ -17,7 +17,10 @@ module.exports = class RTCConfigProvider {
    */
   constructor(options) {
     const { service } = options;
+    if ( service)
+    {
     this._service = service && new HttpClient(service);
+    }
   }
 
   /**
@@ -38,5 +41,19 @@ module.exports = class RTCConfigProvider {
         reject(new Error('turn configuration service is not specified'))
       }
     });
+  }
+
+  getConfiguration_dummy(config){
+    return new Promise((resolve,reject)=>
+    {
+      if ( config)
+      {
+        return resolve(config);
+      }
+      else
+      {
+        reject(new Error('no default configuration passed in'))
+      }
+    })
   }
 }
