@@ -490,6 +490,7 @@ if (config.UseMatchmaker) {
 
 	// Attempt to connect to the Matchmaker
 	function connect() {
+		console.log(`mmPort: ${matchmakerPort} and mmAddress ${matchmakerAddress}`);
 		matchmaker.connect(matchmakerPort, matchmakerAddress);
 	}
 
