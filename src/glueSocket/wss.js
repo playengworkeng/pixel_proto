@@ -5,7 +5,11 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
+
 const portLocal = 8080;
+const cirrus = process.env.CIRRUS_SERVER;
+
+
 
 const options={
     key: fs.readFileSync('./certs/key.pem'),
@@ -26,6 +30,29 @@ app.get('/', (req,res)=>{
     
 })
 
+function routeToCirrus(ws)
+{
+    try{
+         wc = new WebSocket(cirrus);
+
+         wc.on('connection', ()=>{
+            console.log(`player connection to ${cirrus}`)
+        })
+
+        wc.on('message', (message)=>{
+
+            let msg = JSON.parse(message);
+            console.log(`sending ${msg} to player`)
+            ws.send(message);
+        })
+
+
+    }catch (error){
+        console.log(error);
+    }
+
+}
+
 
 const wss = new WebSocket.Server({server, path:'/'});//new WebSocket.Server({port :8888})
 
@@ -35,14 +62,15 @@ wss.on('connection',(ws)=>{
         ws.on('message',data=>{console.log(data.toString('utf8'));
         console.log(`server received a message ${data}`)
 });
-        ws.send('hello')
+        ws.send('connected-hello')
+        routeToCirrus(ws);
     });
 
 
 // add the upgrade logic when coming from http
 server.on('upgrade', (request, socket, head)=>{
     wss.handleUpgrade(request, socket, head, (ws)=>
-    {    ws.send('hello')
+    {    ws.send('hello..upgrading')
         wss.emit('connection', ws, request);
     })
 
