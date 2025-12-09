@@ -54,7 +54,7 @@ function routeToCirrus(ws)
 }
 
 
-const wss = new WebSocket.Server({server, path:'/'});//new WebSocket.Server({port :8888})
+const wss = new WebSocket.Server({noServer:true, path:'/'});//new WebSocket.Server({port :8888})
 
 wss.on('connection',(ws)=>{
         console.log("websocket established");
