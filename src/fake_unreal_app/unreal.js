@@ -28,7 +28,7 @@ function connect(){
     if ( connectionURL )
     {
         server = new WebSocket(connectionURL)
-        server.on('connection', (ws)=>{
+        server.on('open', (ws)=>{
             console.log("we have connection");
 
             ws.on('message', (data)=>{
