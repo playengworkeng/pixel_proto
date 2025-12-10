@@ -30,10 +30,10 @@ function connect(){
     {
         console.log('opening a new connection')
         server = new WebSocket(connectionURL)
-        server.on('open', (ws)=>{
+        server.on('open', ()=>{
             console.log("we have connection");
 
-            ws.on('message', (data)=>{
+            server.on('message', (data)=>{
 
                 msg = JSON.parse(data);
 
@@ -41,7 +41,7 @@ function connect(){
                 {
                     console.log(msg);
                     console.log("Create an answer for offer");
-                    createAnswer(ws)
+                    createAnswer(server)
                 }
             })
         })
