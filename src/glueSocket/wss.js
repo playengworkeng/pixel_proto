@@ -62,7 +62,7 @@ wss.on('connection',(ws)=>{
         ws.on('message',data=>{console.log(data.toString('utf8'));
         console.log(`server received a message ${data}`)
 });
-        ws.send('connected-hello')
+       // ws.send('connected-hello')
         routeToCirrus(ws);
     });
 
@@ -70,7 +70,7 @@ wss.on('connection',(ws)=>{
 // add the upgrade logic when coming from http
 server.on('upgrade', (request, socket, head)=>{
     wss.handleUpgrade(request, socket, head, (ws)=>
-    {    ws.send('hello..upgrading')
+    {  //  ws.send('hello..upgrading')
         wss.emit('connection', ws, request);
     })
 
