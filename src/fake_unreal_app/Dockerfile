@@ -15,6 +15,6 @@ COPY . .
 
 # Expose the port your application listens on
 EXPOSE 8080
-
+EXPOSE 8888
 # Command to run the application when the container starts
 CMD ["node", "unreal.js"]
