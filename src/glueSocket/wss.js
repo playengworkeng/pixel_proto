@@ -7,7 +7,7 @@ const app = express();
 
 
 const portLocal = 8080;
-const cirrus = process.env.CIRRUS_SERVER;
+const matchmaker = process.env.MATCH_MAKER;
 
 
 
@@ -30,13 +30,14 @@ app.get('/', (req,res)=>{
     
 })
 
-function routeToCirrus(ws,inMessage)
+function routeToMatchMaker(ws,inMessage)
 {
     try{
-         wc = new WebSocket(cirrus);
+        console.log(`connecting to ${matchmaker}`)
+         wc = new WebSocket(matchmaker);
 
          wc.on('open', ()=>{
-            console.log(`player connection to ${cirrus}`)
+            console.log(`player connection to ${matchmaker}`)
         })
 
         wc.on('message', (message)=>{
@@ -78,7 +79,7 @@ wss.on('connection',(ws)=>{
         ws.on('error', console.error);
         ws.on('message',(data)=>{console.log(data.toString('utf8'));
         console.log(`server received a message ${data}`)
-        routeToCirrus(ws, data);
+        routeToMatchMaker(ws, data);
 });
        // ws.send('connected-hello')
        
