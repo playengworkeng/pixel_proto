@@ -79,9 +79,11 @@ wss.on('connection',(ws)=>{
         ws.on('error', console.error);
         ws.on('message',(data)=>{console.log(data.toString('utf8'));
         console.log(`server received a message ${data}`)
-        routeToMatchMaker(ws, data);
+        //routeToMatchMaker(ws, data);
 });
        // ws.send('connected-hello')
+
+       routeToMatchMaker(ws, data);
        
     });
 
