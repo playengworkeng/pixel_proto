@@ -42,8 +42,15 @@ function routeToCirrus(ws)
         wc.on('message', (message)=>{
 
             let msg = JSON.parse(message);
-            console.log(`sending ${msg} to player`)
+            console.log(`got a message ${msg} from streamer`)
+
+
+            if ( msg.type == 'answer')
+            {
+
+                console.log(`sending ${msg} to player`)
             ws.send(message);
+            }
         })
 
 
