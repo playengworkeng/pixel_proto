@@ -51,6 +51,8 @@ function routeToCirrus(ws,message)
                 console.log(`sending ${msg} to player`)
             ws.send(message);
             }
+
+             ws.send(message);
         })
 
         wc.send(message);
