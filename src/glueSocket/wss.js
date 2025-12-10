@@ -30,7 +30,7 @@ app.get('/', (req,res)=>{
     
 })
 
-function routeToCirrus(ws,message)
+function routeToCirrus(ws,inMessage)
 {
     try{
          wc = new WebSocket(cirrus);
@@ -50,13 +50,13 @@ function routeToCirrus(ws,message)
             {
 
                 console.log(`sending ${ms} to player`)
-            ws.send(JSON.stringify(message));
+            ws.send(ms);
             }
 
-            // ws.send(ms);
+           ws.send(ms);
         })
 
-        wc.send(message);
+        wc.send(inMessage);
 
 
     }catch (error){
