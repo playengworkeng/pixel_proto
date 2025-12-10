@@ -40,12 +40,13 @@ function connect(){
         server.on('message', (data)=>{
 
                 msg = JSON.parse(data);
+                message = JSON.stringify(data);
 
-                console.log(`received ${msg} from cirrus`)
+                console.log(`received ${message} from cirrus`)
 
                 if (msg.type =='offer')
                 {
-                    console.log(msg);
+                    console.log(message);
                     console.log("Create an answer for offer");
                     createAnswer(server)
                 }
