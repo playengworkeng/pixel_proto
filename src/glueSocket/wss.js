@@ -76,6 +76,7 @@ const wss = new WebSocket.Server({ noServer: true, path: "/" }); //new WebSocket
 
 wss.on("connection", (ws, req) => {
   console.log(`websocket established from ${req.url}`);
+  console.log(`total websocket established from ${req}`);
   ws.on("error", console.error);
   ws.on("message", (data) => {
     console.log(data.toString("utf8"));
