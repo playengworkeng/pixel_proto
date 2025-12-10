@@ -43,9 +43,9 @@ function routeToCirrus(ws,message)
 
             let msg = JSON.parse(message);
             console.log(`got a message ${msg} from streamer`)
+            console.log(`msg type: ${msg.type}`)
 
-
-            if ( msg.type == 'answer')
+            if ( msg.type == 'answer' || msg.type =='config')
             {
 
                 console.log(`sending ${msg} to player`)
