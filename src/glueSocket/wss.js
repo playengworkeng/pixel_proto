@@ -30,7 +30,7 @@ const playerMap = new Map();
 
 function routeToMatchMaker(ws, req, inMessage = null) {
   try {
-    const player = playerMap.get(ws.url);
+    const player = playerMap.get(req.url);
 
     if (player == null) {
       console.log(`connecting to ${matchmaker}`);
@@ -83,7 +83,7 @@ wss.on("connection", (ws, req) => {
     routeToMatchMaker(ws, req, data);
   });
 
-  routeToMatchMaker(ws);
+  routeToMatchMaker(ws, req);
 });
 
 // add the upgrade logic when coming from http
