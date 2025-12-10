@@ -49,11 +49,11 @@ function routeToCirrus(ws,inMessage)
             if ( msg.type == 'answer' || msg.type =='config')
             {
 
-                console.log(`sending ${ms} to player`)
-            ws.send(ms);
+                console.log(`sending ${message} to player`)
+            ws.send(message);
             }
 
-           ws.send(ms);
+           ws.send(message);
         })
 
         wc.send(inMessage);
