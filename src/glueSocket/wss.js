@@ -43,7 +43,7 @@ function routeToCirrus(ws,message)
 
             let msg = JSON.parse(message);
             let ms = JSON.stringify(message);
-            console.log(`got a message ${msg} from streamer`)
+            console.log(`got a message ${ms} from streamer`)
             console.log(`msg type: ${msg.type}`)
 
             if ( msg.type == 'answer' || msg.type =='config')
@@ -53,7 +53,7 @@ function routeToCirrus(ws,message)
             ws.send(JSON.stringify(message));
             }
 
-             ws.send(message);
+            // ws.send(ms);
         })
 
         wc.send(message);
