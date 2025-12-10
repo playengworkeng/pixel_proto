@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 
 const playerMap = new Map();
 
-function routeToMatchMaker(ws, inMessage = null) {
+function routeToMatchMaker(ws, req, inMessage = null) {
   try {
     const player = playerMap.get(ws.url);
 
@@ -37,7 +37,7 @@ function routeToMatchMaker(ws, inMessage = null) {
       console.log("created");
       wc = new WebSocket(matchmaker);
 
-      playerMap.set(ws.url, { wsc: ws, url: ws.url });
+      playerMap.set(ws.url, { wsc: ws, url: req.url });
 
       wc.on("open", () => {
         console.log(`player connection to ${matchmaker}`);
@@ -74,13 +74,13 @@ function routeToMatchMaker(ws, inMessage = null) {
 
 const wss = new WebSocket.Server({ noServer: true, path: "/" }); //new WebSocket.Server({port :8888})
 
-wss.on("connection", (ws) => {
-  console.log(`websocket established from ${ws.url}`);
+wss.on("connection", (ws, req) => {
+  console.log(`websocket established from ${req.url}`);
   ws.on("error", console.error);
   ws.on("message", (data) => {
     console.log(data.toString("utf8"));
     console.log(`server received a message ${data}`);
-    routeToMatchMaker(ws, data);
+    routeToMatchMaker(ws, req, data);
   });
 
   routeToMatchMaker(ws);
