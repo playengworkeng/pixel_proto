@@ -53,7 +53,12 @@ function routeToCirrus(ws,inMessage)
             ws.send(message);
             }
 
-           ws.send(message);
+            if (Buffer.isBuffer(message)){
+                 ws.send(message.toString('utf8'));
+            }
+            else{
+                ws.send(message)
+            }
         })
 
         wc.send(inMessage);
