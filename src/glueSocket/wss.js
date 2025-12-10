@@ -1,20 +1,17 @@
-const WebSocket = require('ws');
-const https = require('https');
-const http = require('http')
-const fs = require('fs');
-const express = require('express');
+const WebSocket = require("ws");
+const https = require("https");
+const http = require("http");
+const fs = require("fs");
+const express = require("express");
 const app = express();
-
 
 const portLocal = 8080;
 const matchmaker = process.env.MATCH_MAKER;
 
-
-
-const options={
-    key: fs.readFileSync('./certs/key.pem'),
-    cert: fs.readFileSync('./certs/cert.pem')
-}
+const options = {
+  key: fs.readFileSync("./certs/key.pem"),
+  cert: fs.readFileSync("./certs/cert.pem"),
+};
 
 const server = http.createServer(app);
 
@@ -25,76 +22,76 @@ const server = http.createServer(app);
 
 // })
 
-app.get('/', (req,res)=>{
-    res.send('Hello');
-    
-})
+app.get("/", (req, res) => {
+  res.send("Hello");
+});
 
-function routeToMatchMaker(ws,inMessage)
-{
-    try{
-        console.log(`connecting to ${matchmaker}`)
-         wc = new WebSocket(matchmaker);
+const playerMap = new Map();
 
-         wc.on('open', ()=>{
-            console.log(`player connection to ${matchmaker}`)
-        })
+function routeToMatchMaker(ws, inMessage = null) {
+  try {
+    const player = playerMap.get(ws.url);
 
-        wc.on('message', (message)=>{
+    if (player == null) {
+      console.log(`connecting to ${matchmaker}`);
+      console.log("created");
+      wc = new WebSocket(matchmaker);
 
-            let msg = JSON.parse(message);
-            let ms = JSON.stringify(message);
-            console.log(`got a message ${ms} from streamer`)
-            console.log(`msg type: ${msg.type}`)
+      playerMap.set(ws.url, { wsc: ws, url: ws.url });
 
-            if ( msg.type == 'answer' || msg.type =='config')
-            {
+      wc.on("open", () => {
+        console.log(`player connection to ${matchmaker}`);
+      });
 
-                console.log(`sending ${message} to player`)
-            ws.send(message);
-            }
+      wc.on("message", (message) => {
+        let msg = JSON.parse(message);
+        let ms = JSON.stringify(message);
+        console.log(`got a message ${ms} from streamer`);
+        console.log(`msg type: ${msg.type}`);
 
-            if (Buffer.isBuffer(message)){
-                 ws.send(message.toString('utf8'));
-            }
-            else{
-                ws.send(message)
-            }
-        })
+        if (msg.type == "answer" || msg.type == "config") {
+          console.log(`sending ${message} to player`);
+          ws.send(message);
+        }
 
-        wc.send(inMessage);
+        if (Buffer.isBuffer(message)) {
+          ws.send(message.toString("utf8"));
+        } else {
+          ws.send(message);
+        }
+      });
+    } else {
+      if (inMessage != null) {
+        const player = playerMap.get(ws.url);
 
-
-    }catch (error){
-        console.log(error);
+        player.wsc.send(inMessage);
+      }
     }
-
+  } catch (error) {
+    console.log(error);
+  }
 }
 
+const wss = new WebSocket.Server({ noServer: true, path: "/" }); //new WebSocket.Server({port :8888})
 
-const wss = new WebSocket.Server({noServer:true, path:'/'});//new WebSocket.Server({port :8888})
+wss.on("connection", (ws) => {
+  console.log(`websocket established from ${ws.url}`);
+  ws.on("error", console.error);
+  ws.on("message", (data) => {
+    console.log(data.toString("utf8"));
+    console.log(`server received a message ${data}`);
+    routeToMatchMaker(ws, data);
+  });
 
-wss.on('connection',(ws)=>{
-        console.log("websocket established");
-        ws.on('error', console.error);
-        ws.on('message',(data)=>{console.log(data.toString('utf8'));
-        console.log(`server received a message ${data}`)
-        //routeToMatchMaker(ws, data);
+  routeToMatchMaker(ws);
 });
-       // ws.send('connected-hello')
-
-       routeToMatchMaker(ws, data);
-       
-    });
-
 
 // add the upgrade logic when coming from http
-server.on('upgrade', (request, socket, head)=>{
-    wss.handleUpgrade(request, socket, head, (ws)=>
-    {  //  ws.send('hello..upgrading')
-        wss.emit('connection', ws, request);
-    })
-
+server.on("upgrade", (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    //  ws.send('hello..upgrading')
+    wss.emit("connection", ws, request);
+  });
 });
 
-server.listen( portLocal, ()=> console.log('running https on port 8080'));
+server.listen(portLocal, () => console.log("running https on port 8080"));
