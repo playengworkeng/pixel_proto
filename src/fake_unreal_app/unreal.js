@@ -25,8 +25,10 @@ async function createAnswer(ws){
 function connect(){
 
     try{
-    if ( connectionURL )
+     console.log(`connection url is ${connectionURL}`)
+    if ( connectionURL  )
     {
+        console.log('opening a new connection')
         server = new WebSocket(connectionURL)
         server.on('open', (ws)=>{
             console.log("we have connection");
