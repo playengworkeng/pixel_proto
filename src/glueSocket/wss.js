@@ -91,6 +91,9 @@ wss.on("connection", (ws, req) => {
 server.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (ws) => {
     //  ws.send('hello..upgrading')
+    console.log(request.url)
+    console.log(socket.address())
+    console.log(socket.remoteAddress)
     wss.emit("connection", ws, request);
   });
 });
