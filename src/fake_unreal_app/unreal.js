@@ -33,9 +33,15 @@ function connect(){
         server.on('open', ()=>{
             console.log("we have connection");
 
-            server.on('message', (data)=>{
+            
+        })
+
+
+        server.on('message', (data)=>{
 
                 msg = JSON.parse(data);
+
+                console.log(`received ${msg} from cirrus`)
 
                 if (msg.type =='offer')
                 {
@@ -44,7 +50,6 @@ function connect(){
                     createAnswer(server)
                 }
             })
-        })
     }
     }catch (error)
     {

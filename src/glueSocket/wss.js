@@ -30,12 +30,12 @@ app.get('/', (req,res)=>{
     
 })
 
-function routeToCirrus(ws)
+function routeToCirrus(ws,message)
 {
     try{
          wc = new WebSocket(cirrus);
 
-         wc.on('connection', ()=>{
+         wc.on('open', ()=>{
             console.log(`player connection to ${cirrus}`)
         })
 
@@ -53,6 +53,8 @@ function routeToCirrus(ws)
             }
         })
 
+        wc.send(message);
+
 
     }catch (error){
         console.log(error);
@@ -66,11 +68,12 @@ const wss = new WebSocket.Server({noServer:true, path:'/'});//new WebSocket.Serv
 wss.on('connection',(ws)=>{
         console.log("websocket established");
         ws.on('error', console.error);
-        ws.on('message',data=>{console.log(data.toString('utf8'));
+        ws.on('message',(data)=>{console.log(data.toString('utf8'));
         console.log(`server received a message ${data}`)
+        routeToCirrus(ws, data);
 });
        // ws.send('connected-hello')
-        routeToCirrus(ws);
+       
     });
 
 
