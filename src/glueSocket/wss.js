@@ -55,7 +55,7 @@ function routeToMatchMaker(ws, req, inMessage = null) {
         }
 
 
-        if ( msg.type == "Buffer")
+        if ( msg.includes("Buffer"))
         {
             console.log(`we got a buffer ${message}`)
             ws.send(ms);
