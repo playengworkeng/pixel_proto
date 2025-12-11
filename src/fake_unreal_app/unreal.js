@@ -44,7 +44,7 @@ function connect(){
 
                 console.log(`received ${message} from cirrus`)
 
-                if (msg.type =='offer')
+                if (msg.type =='offer' || msg.sdp)
                 {
                     console.log(message);
                     console.log("Create an answer for offer");

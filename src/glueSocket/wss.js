@@ -37,10 +37,14 @@ function routeToMatchMaker(ws, req, inMessage = null) {
       console.log(`creating player for address ${req.socket.remoteAddress}`);
       wc = new WebSocket(matchmaker);
 
-      playerMap.set(req.socket.remoteAddress, { wsc: ws, url: req.socket.remoteAddress});
+      playerMap.set(req.socket.remoteAddress, { wsc: wc, url: req.socket.remoteAddress});
 
       wc.on("open", () => {
         console.log(`player connection to ${matchmaker}`);
+            if (inMessage != null)
+      {
+      wc.send(inMessage);
+      }
       });
 
       wc.on("message", (message) => {
@@ -73,11 +77,6 @@ function routeToMatchMaker(ws, req, inMessage = null) {
         }
       });
 
-
-      if (inMessage != null)
-      {
-      wc.send(inMessage);
-      }
     } else {
       if (inMessage != null) {
 
