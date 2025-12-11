@@ -49,7 +49,7 @@ function routeToMatchMaker(ws, req, inMessage = null) {
         console.log(`got a message ${ms} from streamer`);
         console.log(`msg type: ${msg.type}`);
 
-        if ( message.include("object"))
+        if ( message.includes("object"))
         {
             console.log("We got a bad one")
             console.log(message);
