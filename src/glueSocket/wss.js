@@ -49,21 +49,16 @@ function routeToMatchMaker(ws, req, inMessage = null) {
         console.log(`got a message ${ms} from streamer`);
         console.log(`msg type: ${msg.type}`);
 
-        if ( message.includes("object"))
-        {
-            console.log("We got a bad one")
-            console.log(message);
-            console.log(JSON.stringify(message))
-        }
-        else if (msg.type == "answer" || msg.type == "config") {
+        if (msg.type == "answer" || msg.type == "config") {
           console.log(`sending ${message} to player`);
-          ws.send(message);
+          
         }
 
-        else{
+        if (Buffer.isBuffer(message)) {
+          ws.send(message.toString("utf8"));
+        } else {
           ws.send(message);
         }
-    
       });
     } else {
       if (inMessage != null) {
