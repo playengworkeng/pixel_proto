@@ -4,6 +4,7 @@ const connectionURL = process.env.CIRRUS_SERVER;//"";
 
 let server = null;
 let playerID = null;
+let sdpin = null;
 // let iPeerConnection = RTCPeerConnection({
 //     sdpSemantics: 'unified-plan'
 // });
@@ -14,11 +15,11 @@ async function createAnswer(ws){
     const updatedAnswer ={
         type: 'answer',
         playerId: playerID,
-        sdp: "None"
+        sdp: sdpin
     };
 
 
-    console.log("sending sdp");
+    console.log("sending sdp response");
 
     ws.send(JSON.stringify( updatedAnswer));
 
@@ -46,16 +47,20 @@ function connect(){
 
                 console.log(`received ${message} from cirrus`)
 
-                if ( msg.type =='iceCandidate')
+                if ( msg.type =='iceCandidate' )
                 {
+                     console.log("Create an answer for sdp offer");
                     playerID = msg.playerId;
+                    createAnswer(server)
                 }
 
-                if (msg.type =='offer' || msg.sdp)
+                if (msg.type =='offer' || msg.sdp )
                 {
-                    console.log(message);
-                    console.log("Create an answer for offer");
-                    createAnswer(server)
+                    console.log(`offer or sdp : ${message}`);
+                    sdpin = msg.sdp;
+                  
+                   
+                   
                 }
             })
     }
