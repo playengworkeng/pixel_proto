@@ -54,22 +54,19 @@ function routeToMatchMaker(ws, req, inMessage = null) {
           
         }
 
+       isBuffer = false;
 
         if ( ms.includes("Buffer"))
         {
             console.log(`we got a buffer ${message}`)
-            ws.send(ms);
+            isBuffer = true;
         }
-        if ( ms.includes("object"))
-        {
-            console.log(`we got a blob ${message}`)
-            ws.send(ms);
-        }
+
         if (Buffer.isBuffer(message)) {
           ws.send(message.toString("utf8"));
         } else {
 
-            if ( !ms.includes("object"))
+            if ( !isBuffer)
             {
           ws.send(message);
             }
