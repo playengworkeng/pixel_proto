@@ -58,8 +58,8 @@ function routeToMatchMaker(ws, req, inMessage = null) {
 
         if ( ms.includes("Buffer"))
         {
-            console.log(`we got a buffer ${message}`)
-            isBuffer = true;
+            console.log(`we got a buffer ${ms}`)
+
         }
 
         if (Buffer.isBuffer(message)) {
@@ -72,6 +72,12 @@ function routeToMatchMaker(ws, req, inMessage = null) {
             }
         }
       });
+
+
+      if (inMessage != null)
+      {
+      wc.send(inMessage);
+      }
     } else {
       if (inMessage != null) {
 
@@ -102,7 +108,6 @@ wss.on("connection", (ws, req) => {
 server.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (ws) => {
     //  ws.send('hello..upgrading')
-    console.log(request.url)
     console.log(socket.address())
     console.log(socket.remoteAddress)
     wss.emit("connection", ws, request);
