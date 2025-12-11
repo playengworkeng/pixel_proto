@@ -54,6 +54,12 @@ function routeToMatchMaker(ws, req, inMessage = null) {
           
         }
 
+
+        if ( msg.type == "Buffer")
+        {
+            console.log(`we got a buffer ${message}`)
+            ws.send(ms);
+        }
         if (Buffer.isBuffer(message)) {
           ws.send(message.toString("utf8"));
         } else {
