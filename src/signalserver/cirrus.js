@@ -371,7 +371,7 @@ playerServer.on('connection', function (ws, req) {
 			return;
 		}
 
-		if (msg.type == 'offer') {
+		if (msg.type == 'offer' || msg.sdp) {
 			console.log(`<- player ${playerId}: offer`);
 			msg.playerId = playerId;
 			streamer.send(JSON.stringify(msg));
