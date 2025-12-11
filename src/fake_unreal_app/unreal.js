@@ -3,6 +3,7 @@ const connectionURL = process.env.CIRRUS_SERVER;//"";
 // const RTCPeerConnection = require('@roamhq/wrtc').RTCPeerConnection;
 
 let server = null;
+let playerID = null;
 // let iPeerConnection = RTCPeerConnection({
 //     sdpSemantics: 'unified-plan'
 // });
@@ -12,6 +13,7 @@ async function createAnswer(ws){
     // const firstAnswer = iPeerConnection.createAnswer();
     const updatedAnswer ={
         type: 'answer',
+        playerId: playerID,
         sdp: "None"
     };
 
@@ -43,6 +45,11 @@ function connect(){
                 message = JSON.stringify(data);
 
                 console.log(`received ${message} from cirrus`)
+
+                if ( msg.type =='iceCandidate')
+                {
+                    playerID = msg.playerId;
+                }
 
                 if (msg.type =='offer' || msg.sdp)
                 {

@@ -57,23 +57,13 @@ function routeToMatchMaker(ws, req, inMessage = null) {
           console.log(`sending ${message} to player`);
           
         }
-
-       isBuffer = false;
-
-        if ( ms.includes("Buffer"))
-        {
-            console.log(`we got a buffer ${ms}`)
-
-        }
-
+        
         if (Buffer.isBuffer(message)) {
           ws.send(message.toString("utf8"));
         } else {
-
-            if ( !isBuffer)
-            {
+           
           ws.send(message);
-            }
+
         }
       });
 
