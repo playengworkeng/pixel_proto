@@ -37,7 +37,7 @@ function routeToMatchMaker(ws, req, inMessage = null) {
       console.log(`creating player for address ${req.socket.remoteAddress}`);
       wc = new WebSocket(matchmaker);
 
-      playerMap.set(ws.url, { wsc: ws, url: req.socket.remoteAddress});
+      playerMap.set(req.socket.remoteAddress, { wsc: ws, url: req.socket.remoteAddress});
 
       wc.on("open", () => {
         console.log(`player connection to ${matchmaker}`);
