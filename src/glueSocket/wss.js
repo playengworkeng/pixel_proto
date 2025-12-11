@@ -54,15 +54,13 @@ function routeToMatchMaker(ws, req, inMessage = null) {
           ws.send(message);
         }
 
-        if (Buffer.isBuffer(message)) {
-          ws.send(message.toString("utf8"));
-        } else {
+        else{
           ws.send(message);
         }
+    
       });
     } else {
       if (inMessage != null) {
-        const player = playerMap.get(ws.url);
 
         player.wsc.send(inMessage);
       }
